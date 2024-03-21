@@ -4,19 +4,38 @@ import EditIcon from '@mui/icons-material/Edit';
 import React, { useState } from 'react'
 import { UpdateTaskForm } from "./UpdateTaskForm"
 import classnames from 'classnames'
+import axios from 'axios';
+import { API_URL } from '../utils';
 
 
-const Task = ({ task }) => {
+const Task = ({ task, fetchTasks }) => {
   const {id, name, completed} = task;
   const [isComplete, setIsComplete] = useState(completed)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-  const handleUpdateTaskCompletion = () => {
-    setIsComplete((prev) => !prev)
+  const handleUpdateTaskCompletion = async () => {
+    try {
+      await axios.put(API_URL, {
+        id,
+        name,
+        completed: !isCompleted,
+      });
+      setIsComplete((prev) => !prev)  
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
 
-  const handleDeleteTask = () => {
-    console.log("Delete task")
+  const handleDeleteTask = async () => {
+    try {
+      await axios.delete(`${API_URL}/${task.id}`);
+      //after deleting we want to refetch all of our tasks
+
+      await fetchTasks();
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -31,16 +50,26 @@ const Task = ({ task }) => {
         <Typography variant='h4'>{name}</Typography>
       </div>
       <div className='taskButtons'>
-        <Button variant="contained" onClick={() => setIsDialogOpen(true)}>
+        <Button 
+          variant="contained" 
+          onClick={() => setIsDialogOpen(true)}
+        >
           <EditIcon />
         </Button>
-        <Button color="error" variant="contained" onClick={{handleDeleteTask}}>
+        <Button 
+          color="error" 
+          variant="contained" 
+          onClick={{handleDeleteTask}}
+        >
           <DeleteIcon />
         </Button>
       </div>
       
         {/* This component is going to take in three props */}
-        <UpdateTaskForm isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} task={task}/>
+        <UpdateTaskForm 
+          fetchTasks={fetchTasks}
+          isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} 
+          task={task}/>
     </div>
   )
 }
