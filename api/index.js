@@ -35,7 +35,7 @@ app.post('/task', async (req, res) => {
 
     const response = await createTasks(task);
 
-    res.send(reponse);
+    res.send(response);
   } catch(err) {
     res.status(400).send(`Error creating tasks: ${err}`)
   }
@@ -48,7 +48,7 @@ app.put('/task', async (req, res) => {
 
     const response = await updateTasks(task);
     
-    res.send(reponse);
+    res.send(response);
   } catch(err) {
     res.status(400).send(`Error updating tasks: ${err}`)
   }
@@ -62,7 +62,7 @@ app.delete('/task/:id', async (req, res) => {
 
     const response = await deleteTasks(id);
     
-    res.send(reponse);
+    res.send(response);
   } catch(err) {
     res.status(400).send(`Error deleting tasks: ${err}`)
   }
