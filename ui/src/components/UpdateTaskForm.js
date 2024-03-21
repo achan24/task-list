@@ -5,7 +5,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import axios from 'axios';
 import { API_URL } from '../utils';
 
-export const UpdateTaskForm = ({
+const UpdateTaskForm = ({
   fetchTasks,
   isDialogOpen, 
   setIsDialogOpen, 
@@ -48,3 +48,4 @@ export const UpdateTaskForm = ({
   )
 }
 
+export default UpdateTaskForm;

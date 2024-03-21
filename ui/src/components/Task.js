@@ -2,7 +2,7 @@ import { Button, Checkbox, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete'; 
 import EditIcon from '@mui/icons-material/Edit'; 
 import React, { useState } from 'react'
-import { UpdateTaskForm } from "./UpdateTaskForm"
+import UpdateTaskForm from "./UpdateTaskForm"
 import classnames from 'classnames'
 import axios from 'axios';
 import { API_URL } from '../utils';
@@ -10,7 +10,7 @@ import { API_URL } from '../utils';
 
 const Task = ({ task, fetchTasks }) => {
   const {id, name, completed} = task;
-  const [isComplete, setIsComplete] = useState(completed)
+  const [isCompleted, setIsCompleted] = useState(completed)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const handleUpdateTaskCompletion = async () => {
@@ -20,7 +20,7 @@ const Task = ({ task, fetchTasks }) => {
         name,
         completed: !isCompleted,
       });
-      setIsComplete((prev) => !prev)  
+      setIsCompleted((prev) => !prev)  
     } catch (error) {
       console.log(error)
     }
@@ -42,11 +42,11 @@ const Task = ({ task, fetchTasks }) => {
     <div className='task'>
       {/* This is going to allow us to add class names dynamically
       The first class flex is always going to be applied
-      The second class done is only going to applied if isComplete is true */}
+      The second class done is only going to applied if isCompleted is true */}
       <div className={classnames("flex", {
-        done: isComplete,
+        done: isCompleted,
       })}>
-        <Checkbox checked={isComplete} onChange={handleUpdateTaskCompletion}/>
+        <Checkbox checked={isCompleted} onChange={handleUpdateTaskCompletion}/>
         <Typography variant='h4'>{name}</Typography>
       </div>
       <div className='taskButtons'>
