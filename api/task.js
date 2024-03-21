@@ -67,7 +67,7 @@ export const deleteTasks = async( id ) => {
   const command = new DeleteCommand({
     TableName: "Tasks",
     Key: {
-      id}
+      id,},
   })
 
   const response = await docClient.send(command);
